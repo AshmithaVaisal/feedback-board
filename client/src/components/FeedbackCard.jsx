@@ -1,30 +1,20 @@
-import { useState } from "react";
-
-const FeedbackCard = ({ username, message }) => {
-
-  const [liked, setLiked] = useState(false);
-  const handleLike = () => {
-    setLiked(!liked);
-  };
-
-
+const FeedbackCard = ({ user, rating, message, likes, onLike }) => {
   return (
-    <>
-      <div className="bg-white p-6 rounded-2xl shadow-md border max-w-md">
-        <h2 className="text-xl font-semibold mb-2 text-gray-800">{username}</h2>
-        <p className="text-gray-600">{message}</p>
+    <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition">
+      <h2 className="font-bold text-lg">{user}</h2>
+      <p className="text-yellow-600">Rating: {rating}/5</p>
+      <p className="text-gray-700 mt-2">{message}</p>
+      <div className="flex justify-between items-center mt-4">
         <button
-          onClick={handleLike}
-          className={`py-2 px-4 rounded transition ${
-            liked
-              ? "bg-green-500 hover:bg-green-600"
-              : "bg-blue-500 hover:bg-blue-600"
-          }text-white`}
+          onClick={onLike}
+          className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
         >
-          {liked ? "💚 Liked" : "👍 Like"}
+          Like
         </button>
+        <span className="text-sm text-gray-500">{likes} Likes</span>
       </div>
-    </>
+    </div>
   );
 };
+
 export default FeedbackCard;
