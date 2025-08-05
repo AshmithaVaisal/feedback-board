@@ -1,4 +1,5 @@
 import FeedbackCard from "./components/FeedbackCard";
+import FeedbackList from "./components/FeedbackList";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         username="Ashmitha"
         message="This is my first professional component!"
       />
+      <FeedbackList/>
     </div>
   );
 }

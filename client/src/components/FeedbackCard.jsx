@@ -1,10 +1,13 @@
 import { useState } from "react";
 
 const FeedbackCard = ({ username, message }) => {
+
   const [liked, setLiked] = useState(false);
   const handleLike = () => {
     setLiked(!liked);
   };
+
+
   return (
     <>
       <div className="bg-white p-6 rounded-2xl shadow-md border max-w-md">
