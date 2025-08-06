@@ -1,4 +1,4 @@
-const FeedbackCard = ({ user, rating, message, likes, onLike }) => {
+const FeedbackCard = ({ user, rating, message, likes, onLike, onDelete }) => {
   return (
     <div className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition">
       <h2 className="font-bold text-lg">{user}</h2>
@@ -11,7 +11,13 @@ const FeedbackCard = ({ user, rating, message, likes, onLike }) => {
         >
           Like
         </button>
-        <span className="text-sm text-gray-500">{likes} Likes</span>
+        <span className="text-sm text-gray-500 ml-auto">{likes} Likes</span>
+        <button
+          onClick={onDelete}
+          className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-600 transition ml-auto"
+        >
+          Remove
+        </button>
       </div>
     </div>
   );
