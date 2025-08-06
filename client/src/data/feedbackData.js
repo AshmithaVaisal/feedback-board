@@ -20,6 +20,14 @@ const feedbackData = [
     message: 'Good start, but could use more visual feedback.',
     likes:0 
   },
+  {
+    id: 4,
+    user: 'Guna',
+    rating: 4.5,
+    message: 'Personally loved the UI color palatte',
+    likes:0 
+  },
+  
 ];
 
 export default feedbackData;
