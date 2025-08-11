@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FeedbackCard from "./FeedbackCard";
+import FeedbackForm from "./FeedBackForm";
 import feedbackData from "../data/feedbackData";
 
 const FeedbackList = () => {
@@ -16,16 +17,24 @@ const FeedbackList = () => {
     setFeedbackList((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const handleAdd = (newItem) => {
+    setFeedbackList((prev) => [newItem, ...prev]);
+  };
+
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 p-4">
-      {feedbackList.map((item) => (
-        <FeedbackCard
-          key={item.id}
-          {...item}
-          onLike={() => handleLike(item.id)}
-          onDelete={()=> handleDelete(item.id)}
-        />
-      ))}
+    <div className="p-4">
+      <FeedbackForm onAdd={handleAdd} />
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-6">
+        {feedbackList.map((item) => (
+          <FeedbackCard
+            key={item.id}
+            {...item}
+            onLike={() => handleLike(item.id)}
+            onDelete={() => handleDelete(item.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
