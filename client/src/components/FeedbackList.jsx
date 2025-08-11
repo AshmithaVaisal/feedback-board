@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedbackCard from "./FeedbackCard";
 import FeedbackForm from "./FeedBackForm";
 import feedbackData from "../data/feedbackData";
 
 const FeedbackList = () => {
-  const [feedbackList, setFeedbackList] = useState(feedbackData);
+  const [feedbackList, setFeedbackList] = useState(() => {
+    const storedFeedback = localStorage.getItem("feedbackList");
+    return storedFeedback ? JSON.parse(storedFeedback) : feedbackData;
+  });
+  const [sortOption, setSortOption] = useState("newest");
+
+  // Save to localstorage
+  useEffect(() => {
+    localStorage.setItem("feedbackList", JSON.stringify(feedbackList));
+  }, [feedbackList]);
 
   const handleLike = (id) => {
     const updatedList = feedbackList.map((item) =>
@@ -21,6 +30,23 @@ const FeedbackList = () => {
     setFeedbackList((prev) => [newItem, ...prev]);
   };
 
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  // Sorting logic based on selected option
+
+  const sortedList = [...feedbackList].sort((a, b) => {
+    if (sortOption === "highest-rating") {
+      return b.rating - a.rating;
+    }
+    if (sortOption === "most-liked") {
+      return b.likes - a.likes;
+    }
+    // default: newest first
+    return b.id - a.id;
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section with Background Image */}
@@ -29,7 +55,7 @@ const FeedbackList = () => {
         style={{ backgroundImage: "url('/src/assets/c3.jpg')" }}
       >
         {/* Left Side - Company Name & Tagline */}
-        <div className="text-black max-w-lg">
+        <div className="text-white max-w-lg">
           <h1 className="text-6xl font-bold">ELOVEVIA</h1>
           <span className="block text-2xl font-light tracking-wide mt-2">
             Luxury Cosmetics for Every You
@@ -37,18 +63,31 @@ const FeedbackList = () => {
         </div>
 
         {/* Right Side - Feedback Form */}
-        <div className="bg-white/60 rounded-lg shadow-lg w-full max-w-md p-4">
+        <div className="bg-red-100/50 rounded-lg shadow-lg w-full max-w-md p-4">
           <FeedbackForm onAdd={handleAdd} />
         </div>
       </div>
 
-      {/* Feedback Cards Section */}
       <div className="flex-1 p-6 bg-white">
-        <h1 className="text-2xl text-center p-4 mb-6 font-semibold">
+        {/* Title Centered */}
+        <h1 className="text-3xl text-center mb-4 mt-8 font-semibold">
           Our Customer Testimonials ✨
         </h1>
+
+        {/* Sort Dropdown Centered */}
+        <div className="flex justify-center mb-12 mt-8">
+          <select
+            value={sortOption}
+            onChange={handleSortChange}
+            className="border p-2 rounded w-60 sm:w-72 md:w-80 lg:w-120"
+          >
+            <option value="newest">Newest First</option>
+            <option value="highest-rating">Highest Rating</option>
+            <option value="most-liked">Most Liked</option>
+          </select>
+        </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {feedbackList.map((item) => (
+          {sortedList.map((item) => (
             <FeedbackCard
               key={item.id}
               {...item}
