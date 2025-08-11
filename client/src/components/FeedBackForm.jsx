@@ -32,9 +32,9 @@ const FeedbackForm = ({ onAdd }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-4 rounded-lg shadow-md max-w-md mx-auto my-6"
+      className="p-4 rounded-lg shadow-md max-w-md my-6"
     >
-      <h2 className="text-lg font-semibold mb-3">Add your Feedback</h2>
+      <h2 className="text-xl mb-4 text-center">Add your Feedback ⭐</h2>
 
       <div className="mb-3">
         <label className="block text-sm font-medium mb-1">Name</label>
@@ -73,7 +73,7 @@ const FeedbackForm = ({ onAdd }) => {
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
         Submit
       </button>

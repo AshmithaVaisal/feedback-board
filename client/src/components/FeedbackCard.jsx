@@ -7,14 +7,14 @@ const FeedbackCard = ({ user, rating, message, likes, onLike, onDelete }) => {
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={onLike}
-          className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
+          className="bg-emerald-500 text-white px-3 py-1 rounded-md hover:bg-emerald-600 transition"
         >
           Like
         </button>
         <span className="text-sm text-gray-500 ml-auto">{likes} Likes</span>
         <button
           onClick={onDelete}
-          className="bg-red-600 text-white px-2 py-1 rounded-md hover:bg-red-600 transition ml-auto"
+          className="bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600 transition ml-auto"
         >
           Remove
         </button>

@@ -2,11 +2,7 @@ import FeedbackCard from "./components/FeedbackCard";
 import FeedbackList from "./components/FeedbackList";
 
 function App() {
-  return (
-    <div className="min-h-screen bg-yellow-100 flex items-center justify-center p-6">
-      <FeedbackList />
-    </div>
-  );
+  return <FeedbackList />;
 }
 
 export default App;
