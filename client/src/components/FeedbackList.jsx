@@ -9,11 +9,19 @@ const FeedbackList = () => {
     return storedFeedback ? JSON.parse(storedFeedback) : feedbackData;
   });
   const [sortOption, setSortOption] = useState("newest");
+  const [loading, setLoading] = useState(true);
 
   // Save to localstorage
   useEffect(() => {
     localStorage.setItem("feedbackList", JSON.stringify(feedbackList));
   }, [feedbackList]);
+
+  // Simulate API delay for better UX
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200); // 1.2 sec
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleLike = (id) => {
     const updatedList = feedbackList.map((item) =>
@@ -86,16 +94,30 @@ const FeedbackList = () => {
             <option value="most-liked">Most Liked</option>
           </select>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {sortedList.map((item) => (
-            <FeedbackCard
-              key={item.id}
-              {...item}
-              onLike={() => handleLike(item.id)}
-              onDelete={() => handleDelete(item.id)}
-            />
-          ))}
-        </div>
+        {/* Loading State */}
+        {loading && (
+          <p className="text-center text-gray-500">Loading feedback...</p>
+        )}
+
+        {/* Empty State */}
+        {!loading && feedbackList.length === 0 && (
+          <p className="text-center text-gray-600">
+            No feedback yet. Be the first to share your thoughts 💬
+          </p>
+        )}
+        {/* Feedback Cards */}
+        {!loading && feedbackList.length > 0 && (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {sortedList.map((item) => (
+              <FeedbackCard
+                key={item.id}
+                {...item}
+                onLike={() => handleLike(item.id)}
+                onDelete={() => handleDelete(item.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
