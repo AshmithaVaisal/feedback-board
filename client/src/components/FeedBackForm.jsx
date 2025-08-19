@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const FeedbackForm = ({ onAdd }) => {
+const FeedbackForm = ({ onAdd, editing, onUpdate, cancelEdit }) => {
   const [user, setUser] = useState("");
   const [rating, setRating] = useState(5);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  // Pre-fill form if editing
+  useEffect(() => {
+    if (editing) {
+      setUser(editing.user);
+      setRating(editing.rating);
+      setMessage(editing.message);
+    } else {
+      setUser("");
+      setRating(5);
+      setMessage("");
+    }
+  }, [editing]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,14 +28,20 @@ const FeedbackForm = ({ onAdd }) => {
     }
 
     const newFeedback = {
-      id: Date.now(),
+      id: editing ? editing.id : Date.now(),
       user,
       rating,
       message,
-      likes: 0,
+      likes: editing ? editing.likes : 0,
     };
 
-    onAdd(newFeedback); // Send to parent
+    if (editing) {
+      onUpdate(newFeedback);
+    } else {
+      onAdd(newFeedback);
+    }
+
+    cancelEdit(); // reset edit mode after submit
     setUser("");
     setRating(5);
     setMessage("");
@@ -30,11 +49,10 @@ const FeedbackForm = ({ onAdd }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-4 rounded-lg shadow-md max-w-md my-6"
-    >
-      <h2 className="text-xl mb-4 text-center">Add your Feedback ⭐</h2>
+    <form onSubmit={handleSubmit}>
+      <h2 className="text-xl mb-4 text-center font-semibold">
+        {editing ? "Edit Feedback ✏️" : "Add Your Feedback ⭐"}
+      </h2>
 
       <div className="mb-3">
         <label className="block text-sm font-medium mb-1">Name</label>
@@ -71,12 +89,30 @@ const FeedbackForm = ({ onAdd }) => {
 
       {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
-      <button
-        type="submit"
-        className="bg-emerald-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        Submit
-      </button>
+      <div className="flex space-x-3">
+        {/* Submit / Save button */}
+        <button
+          type="submit"
+          className={`${
+            editing
+              ? "bg-blue-500 hover:bg-blue-600"
+              : "bg-emerald-500 hover:bg-emerald-600"
+          } text-white px-4 py-2 rounded transition`}
+        >
+          {editing ? "Save Changes" : "Submit"}
+        </button>
+
+        {/* Cancel button only if editing */}
+        {editing && (
+          <button
+            type="button"
+            onClick={cancelEdit}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 };
