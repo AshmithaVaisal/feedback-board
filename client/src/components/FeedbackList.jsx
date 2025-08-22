@@ -65,19 +65,19 @@ const FeedbackList = () => {
     <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
       <div
-        className="h-[700px] bg-center bg-cover flex items-center justify-between px-16"
+        className="h-auto min-h-[600px] bg-center bg-cover flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-10 gap-8"
         style={{ backgroundImage: "url('/src/assets/c3.jpg')" }}
       >
         {/* Left Side - Company Info */}
-        <div className="text-white max-w-lg">
-          <h1 className="text-6xl font-bold">ELOVEVIA</h1>
-          <span className="block text-2xl font-light tracking-wide mt-2">
+        <div className="text-white max-w-lg text-center md:text-left">
+          <h1 className="text-4xl md:text-6xl font-bold">ELOVEVIA</h1>
+          <span className="block text-lg md:text-2xl font-light tracking-wide mt-2">
             Luxury Cosmetics for Every You
           </span>
         </div>
 
         {/* Right Side - Feedback Form */}
-        <div className="bg-red-100/50 rounded-lg shadow-lg w-full max-w-md px-8 py-10">
+        <div className="bg-red-100/70 rounded-2xl shadow-lg w-full max-w-md px-6 md:px-8 py-8 md:py-10">
           <FeedbackForm
             onAdd={handleAdd}
             editing={editing}
@@ -94,15 +94,16 @@ const FeedbackList = () => {
         </h1>
 
         {/* Sort Dropdown */}
+        {/* Sort Dropdown Centered */}
         <div className="flex justify-center mb-12 mt-8">
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className="border p-2 rounded w-60 sm:w-72 md:w-80 lg:w-120"
+            className="border border-gray-300 bg-white shadow-sm p-3 rounded-xl w-60 sm:w-72 md:w-80 text-gray-700 font-medium focus:ring-2 focus:ring-emerald-400 focus:outline-none transition"
           >
-            <option value="newest">Newest First</option>
-            <option value="highest-rating">Highest Rating</option>
-            <option value="most-liked">Most Liked</option>
+            <option value="newest">🆕 Newest First</option>
+            <option value="highest-rating">⭐ Highest Rating</option>
+            <option value="most-liked">👍 Most Liked</option>
           </select>
         </div>
 
